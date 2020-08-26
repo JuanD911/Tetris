@@ -3,16 +3,17 @@ package Tetris;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Persistencia.*;
+
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-
-import Tetris.Persistencia.*;
 
 public class Registrarse extends JFrame implements ActionListener {
 
@@ -73,7 +74,7 @@ public class Registrarse extends JFrame implements ActionListener {
 
             escritor.addContent(userName);
             escritor.addContent(password);
-
+            JOptionPane.showMessageDialog(null, "Se registro exitosamente");
             this.tetris.setVisible(true);
         }
     }

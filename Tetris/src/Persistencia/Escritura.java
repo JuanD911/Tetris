@@ -1,9 +1,12 @@
-package Tetris.Persistencia;
+package Persistencia;
 
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 import java.io.File;
 
 public class Escritura {
@@ -23,7 +26,7 @@ public class Escritura {
             if (directorio.mkdir()) {
 
             } else {
-                System.err.println("Error al crear la capeta");
+            	JOptionPane.showMessageDialog(null,"Error al crear la capeta");
             }
         }
     }

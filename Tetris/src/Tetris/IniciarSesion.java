@@ -13,7 +13,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import Tetris.Persistencia.*;
+import Persistencia.*;
 
 public class IniciarSesion extends JFrame implements ActionListener {
 
@@ -23,6 +23,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JTextField nombre; 
     private JPasswordField contraseña;
     Lectura lector;
+    private Tetris tetris = new Tetris();
 
     public IniciarSesion() {
 
@@ -62,13 +63,13 @@ public class IniciarSesion extends JFrame implements ActionListener {
 
         this.setVisible(true);
 
-        ArrayList<String> contenido = lector.readAll();
-
-        for(String content : contenido) {
-            System.out.println(content);
-        }
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {}
+    public void actionPerformed(ActionEvent e) {
+    	if(e.getSource() == iniciarsesion) {
+    		ArrayList<String> contenido = lector.readAll();
+    		
+    	}
+    }
 }

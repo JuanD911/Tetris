@@ -1,4 +1,4 @@
-package Tetris.Persistencia;
+package Persistencia;
 
 import java.io.FileReader;
 import java.io.IOException;

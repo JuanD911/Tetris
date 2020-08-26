@@ -24,7 +24,6 @@ public class Figura {
         setFigura(Tetromino.NoFigura);
     }
 
-/* Este método recibe un tipo de pieza (shape) y asigna los valores de las coordenadas de la pieza (coords) segun el tipo de pieza que es. Para ello busca en (coordsTable), el tipo de pieza y la copia a coords. */
     public void setFigura(Tetromino shape) {
 
 /* Cada fila de coordsTable representa un tipo de pieza y estan en el orden en el que aparecen en el enumerado. Por ejemplo, los numeros { 0, -1 }, { 0, 0 }, { -1, 0 }, { -1, 1 }, representan la pieza S-shape rotada.*/

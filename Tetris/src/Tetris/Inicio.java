@@ -5,16 +5,17 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Font;
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Inicio extends JFrame{
+public class Inicio extends JFrame {
 	
 	InterfazReglas r = new InterfazReglas();
+	IniciarSesion I;
+	Registrarse R;
 	private JButton IniciarSesion;
 	private JButton Registrarse;
 	private JButton Reglas;
@@ -31,10 +32,7 @@ public class Inicio extends JFrame{
 		titulo = new JLabel();
 		caja.setLayout(new GridLayout(2,1));
 		tableros.setLayout(new GridLayout(1,1));
-//
-//    titulo.setHorizontalAlignment(JLabel.CENTER);
-//    titulo.setForeground(Color.white);
-//    titulo.setFont(new Font ("Courier",Font.PLAIN,60));
+		
 		tableros.setBackground(Color.black);
     
 		ImageIcon IconoTitulo=new ImageIcon("Iconos/tetris.png");
@@ -76,6 +74,19 @@ public class Inicio extends JFrame{
 				r.setVisible(true);
 			}
 		});
+
+		Registrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				R = new Registrarse();
+			}
+		});
+
+		IniciarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				I = new IniciarSesion();
+			}
+		});
+
     }
 }
 

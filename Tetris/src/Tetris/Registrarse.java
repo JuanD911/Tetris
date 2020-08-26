@@ -2,9 +2,14 @@ package Tetris;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import java.awt.event.ActionListener;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 import Tetris.Persistencia.*;
@@ -12,35 +17,49 @@ import Tetris.Persistencia.*;
 public class Registrarse extends JFrame implements ActionListener {
 
     private String userName, password;
-
     private JButton registrarse;
-    private JTextField nombre, contrasenna;
-
+    private JPanel contentPane;
+    private JTextField nombre;
+    private JPasswordField contraseña;
     private Escritura escritor;
-
     private Tetris tetris = new Tetris();
 
     public Registrarse() {
 
         escritor = new Escritura("userData");
 
-        this.setSize(450, 325);
-        this.setTitle("Registro");
-
-        registrarse = new JButton("Registrarse");
-        nombre = new JTextField("Nombre");
-        contrasenna = new JTextField("ContraseÃ±a");
-
-        registrarse.setBounds(215, 300, 100, 25);
-        nombre.setBounds(215, 150, 100, 25);
-        contrasenna.setBounds(215, 250, 100, 25);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		this.setMinimumSize(new Dimension(450, 325));
+		this.setTitle("Registro");
+		
+		JLabel name = new JLabel("Nombre");
+		name.setBounds(34, 70, 46, 14);
+		contentPane.add(name);
+		
+		JLabel pass = new JLabel("Contraseña");
+		pass.setBounds(34, 113, 46, 14);
+		contentPane.add(pass);
+		
+		nombre = new JTextField();
+		nombre.setBounds(126, 67, 240, 20);
+		contentPane.add(nombre);
+		nombre.setColumns(10);
+		
+		contraseña = new JPasswordField();
+		contraseña.setBounds(126, 110, 240, 20);
+		contentPane.add(contraseña);
+		contraseña.setColumns(10);
+		
+		registrarse = new JButton("Registrarse");
+		registrarse.setBounds(165, 183, 144, 50);
+		contentPane.add(registrarse);
 
         registrarse.addActionListener(this);
-
-        this.add(registrarse);
-        this.add(nombre);
-        this.add(contrasenna);
-
 
         this.setVisible(true);
 
@@ -50,10 +69,10 @@ public class Registrarse extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == registrarse) {
             this.userName = nombre.getText();
-            this.password = contrasenna.getText();
+            this.password = contraseña.getText();
 
-            escritor.addContent("Juan David es una Perra");
-            escritor.addContent("Cierto que si!!!!");
+            escritor.addContent(userName);
+            escritor.addContent(password);
 
             this.tetris.setVisible(true);
         }

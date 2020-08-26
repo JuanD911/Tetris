@@ -48,7 +48,7 @@ public class Board extends JPanel implements ActionListener {
 
        // El timer lanza eventos cada cierto tiempo indicado por el delay.
        // En nuestro caso el timer llama a actionPerformed() cada 400 ms
-       timer = new Timer(500, this);
+       timer = new Timer(550, this);
        timer.start();
 
        // Asignamos la barra de estado

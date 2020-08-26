@@ -26,7 +26,6 @@ public class Figura {
 
     public void setFigura(Tetromino shape) {
 
-/* Cada fila de coordsTable representa un tipo de pieza y estan en el orden en el que aparecen en el enumerado. Por ejemplo, los numeros { 0, -1 }, { 0, 0 }, { -1, 0 }, { -1, 1 }, representan la pieza S-shape rotada.*/
         coordsTable = new int[][][] {
         { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } },
         { { 0, -1 },  { 0, 0 },   { -1, 0 },  { -1, 1 } },
@@ -38,7 +37,6 @@ public class Figura {
         { { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } }
         };
 
-/* Aqui es donde se copia la fila de la pieza que nos interesa de la coordsTable a las coordenadas de la pieza (coords). Para saber que fila de la tabla coger debemos saber que posicion ocupa esa pieza (shape) dentro del enumerado. Esto lo hacemos utilizando el metodo ordinal() que nos devuelve un entero con la posicion que ocupa. */
         for (int i = 0; i < 4 ; i++) {
         	for (int j = 0; j < 2; ++j) {
                 coords[i][j] = coordsTable[shape.ordinal()][i][j];
@@ -53,8 +51,6 @@ public class Figura {
     public int y(int index) { return coords[index][1]; }
     public Tetromino getFigura()  { return pieza; }
 
-
-/* Metodo que genera una figura aleatoriamente */
     public void setFigura_random(){
         Random r = new Random();
         int x = Math.abs(r.nextInt()) % 7 + 1;
@@ -62,8 +58,6 @@ public class Figura {
         setFigura(values[x]);
     }
 
-
-/* Mira las coordenadas de la pieza y buscan la posicion minima en x e y */
     public int minX(){
         int m = coords[0][0];
         for (int i=0; i < 4; i++) {

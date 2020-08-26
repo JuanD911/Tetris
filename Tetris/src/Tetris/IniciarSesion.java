@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -22,8 +23,8 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JPanel contentPane;
     private JTextField nombre; 
     private JPasswordField contraseña;
-    Lectura lector;
     private Tetris tetris = new Tetris();
+    private Persistencia datos;
 
     public IniciarSesion() {
 
@@ -38,11 +39,11 @@ public class IniciarSesion extends JFrame implements ActionListener {
 		this.setTitle("Iniciar Sesion");
 		
 		JLabel name = new JLabel("Nombre");
-		name.setBounds(34, 70, 46, 14);
+		name.setBounds(10, 70, 100, 14);
 		contentPane.add(name);
 		
 		JLabel pass = new JLabel("Contraseña");
-		pass.setBounds(34, 113, 46, 14);
+		pass.setBounds(10, 113, 100, 14);
 		contentPane.add(pass);
 		
 		nombre = new JTextField();
@@ -68,9 +69,13 @@ public class IniciarSesion extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
     	if(e.getSource() == iniciarsesion) {
-    		lector = new Lectura("userData");
-    		ArrayList<String> contenido = lector.readAll();
-    		
+    		datos = new Persistencia (nombre.getText(), contraseña.getText());
+    		if (!datos.isChecked()) {
+    			JOptionPane.showMessageDialog(null, "Te quedo mal gran hijueputa");
+    		} else {
+    			JOptionPane.showMessageDialog(null, "Bienvenido "+nombre.getText());
+    			tetris.setVisible(true);
+    		}
     	}
     }
 }

@@ -11,7 +11,7 @@ public class Tetris extends JFrame {
     public Tetris() {
 
     // Creamos una barra de estado
-        barra_estado = new JLabel(" 0");
+        barra_estado = new JLabel("---0---");
         add(barra_estado, BorderLayout.NORTH);
 
     // Cremos el tablero de juego
@@ -22,6 +22,7 @@ public class Tetris extends JFrame {
         setTitle("Tetris");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(false);
    }
 
    public JLabel getBarra() {

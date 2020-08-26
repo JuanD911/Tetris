@@ -7,29 +7,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
-
+	
     Figura.Tetromino[] tablero;
-    final int ancho = 10;
-    final int altura = 22;
+    private final int ancho = 10;
+    private final int altura = 22;
+    JButton restart = new JButton("Volver a jugar");
 
-    int lineas_completas = 0;
+    int lineas_removidas = 0;
     JLabel barra;
 
     Figura pieza;
     
-    int curX = 0;
-    int curY = 0;
+    private int curX = 0;
+    private int curY = 0;
 
     // pieza_caer determina si la pieza ha terminado de caer
     // para asi saber si tenemos que generar una nueva
-    boolean pieza_caer = false;
-    boolean empezar = false;
-    boolean pausar = false;
+    private boolean pieza_caer = false;
+    private boolean empezar = false;
+    private boolean pausar = false;
     Timer timer;
 
     /* Constructor */
@@ -49,6 +52,10 @@ public class Board extends JPanel implements ActionListener {
 
        addKeyListener(new TAdapter());
        limpiartablero();
+       
+       this.add(restart);
+       restart.setVisible(false);
+       restart.setBounds(165, 183, 144, 50);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -64,22 +71,19 @@ public class Board extends JPanel implements ActionListener {
     int squareHeight() { return (int) getSize().getHeight() / altura; }
     Figura.Tetromino shapeAt(int x, int y) { return tablero[(y * ancho) + x]; }
 
-
-    // Inicializa una partida nueva
     public void start(){
         if (pausar)
             return;
 
         empezar = true;
         pieza_caer = false;
-        lineas_completas = 0;
+        lineas_removidas = 0;
         limpiartablero();
 
         nuevapieza();
         timer.start();
     }
 
-    // Pausa o despausa la partida
     private void pause(){
         if (!empezar)
             return;
@@ -87,25 +91,20 @@ public class Board extends JPanel implements ActionListener {
         pausar = !pausar;
         if (pausar) {
             timer.stop();
-            barra.setText("Pausa");
+            barra.setText("---Pausa---");
         } else {
             timer.start();
-            barra.setText(String.valueOf(lineas_completas));
+            barra.setText(String.valueOf("---"+lineas_removidas+"---"));
         }
         repaint();
     }
 
-    /* Este metodo dibuja todos los objetos en el tablero.
-     * El proceso tiene 2 pasos:
-     * 1. Se pintan todas las figuras que ya se habian colocado en el tablero.
-     * 2. Pintamos la figura que esta cayendo actualmente. */
     public void paint(Graphics g){
         super.paint(g);
 
         Dimension size = getSize();
         int boardTop = (int) size.getHeight() - altura * squareHeight();
 
-        /* 1. Se pintan todas las figuras que ya han tocado la parte baja del tablero. Todos los cuadrados estan guardados en el array de tablero y podemos acceder a el usando el metodo shapeAt() */
         for (int i = 0; i < altura; ++i) {
             for (int j = 0; j < ancho; ++j) {
                 Figura.Tetromino figura = shapeAt(j, altura - i - 1);
@@ -114,8 +113,7 @@ public class Board extends JPanel implements ActionListener {
                                boardTop + i * squareHeight(), figura);
             }
         }
-
-        /* 2. Pintamos la figura que esta cayendo actualmente. */
+        
         if (pieza.getFigura() != Figura.Tetromino.NoFigura) {
             for (int i = 0; i < 4; ++i) {
                 int x = curX + pieza.x(i);
@@ -127,10 +125,6 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    /* Metodo que hace caer la pieza actual de forma rapida si pulsamos la tecla espacio. El proceso que realiza consiste en bajar la pieza una linea hasta que ya no pueda bajar mas, sea porque haya llegado al final del tablero o porque haya chocado con otra pieza.
-	Para implementar el metodo se utilizan dos metodos auxiliares:
-    - tryMove para saber si se puede mover la pieza a ese nuevo lugar
-    - y pieceDropped que una vez que la pieza tiene ya su posicion definitiva la guarda en el array del tablero */
     private void bajar(){
         int newY = curY;
         while (newY > 0) {
@@ -141,10 +135,6 @@ public class Board extends JPanel implements ActionListener {
         caida_pieza();
     }
 
-    /* Este metodo mueve la pieza una linea abajo si es posible.
-     Para implementar el metodo se utilizan dos metodos auxiliares:
-     - tryMove para saber si se puede mover la pieza a ese nuevo lugar
-     - y pieceDropped que una vez que la pieza tiene ya su posicion definitiva la guarda en el array del tablero */
     private void bajar_unalinea(){
         if (!tryMove(pieza, curX, curY - 1))
             caida_pieza();
@@ -171,12 +161,6 @@ public class Board extends JPanel implements ActionListener {
             nuevapieza();
     }
 
-    /* Este metodo crea una nueva pieza que cae y la asigna a curPiece. Lo asigna con una forma aleatoria usando el metodo setRandomShape. Entonces inicializamos su posicion actual curX y curY a la parte superior. Posteriormente vemos si la pieza se puede mover a esa posicion inicial que hemos asignado, utilizando el metodo tryMove.
-     Si no se puede mover es porque ya esta todo el tablero lleno y hemos perdido y por lo tanto, debemos hacer varias cosas:
-     - asignar a la p ieza actual curPiece la figura NoShape
-     - parar el timer
-     - cambiar el booleano de comienzo isStarted a falso
-     - asignar a la barra de estado statusbar el texto "game over" */
     private void nuevapieza(){
         pieza.setFigura_random();
         curX = ancho / 2 + 1;
@@ -187,6 +171,14 @@ public class Board extends JPanel implements ActionListener {
             timer.stop();
             empezar = false;
             barra.setText("game over");
+            restart.setVisible(true);
+            restart.addActionListener(new ActionListener() {
+    		public void actionPerformed(ActionEvent arg0) {
+    				start();
+    				barra.setText(String.valueOf(lineas_removidas));
+    				restart.hide();
+    			}
+    		});
         }
     }
 
@@ -211,22 +203,6 @@ public class Board extends JPanel implements ActionListener {
         return true;
     }
 
-    /* Este metodo se lanza despues de colocar una pieza y su objetivo es eliminar todas las lineas completas (filas) que pueda haber en el tablero.
-     Las lineas se borran cuando estan todas rellena de piezas y no hay huecos, y por cada linea que borramos aumentamos los puntos en el juego.
-     Para implementar este metodo, primero tenemos que mirar cuantas lineas (filas) completas tenemos actualmente (puede haber varias). Recorremos todo el tablero linea a linea desde abajo (BoardHeight) hacia arriba (0).
-     Por cada linea hacemos lo siguiente:
-     - Miramos toda la fila preguntando para cada casilla si alli hay o una pieza o un hueco. Para eso usamos shapeAt y los tipos de figuras, como NoShape.
-     - Si en toda esa fila hay figuras distintas a NoShape entonces tendremos una linea completa que deberemos eliminar.
-     El proceso para eliminar la linea es el siguiente:
-     - Recorremos el tablero linea a linea, desde la linea (fila) que tenemos que borrar hacia arriba (BoardHeight).
-     - Por cada linea tenemos que recorrerla completamente de izquierda a derecha y bajar todas sus piezas una casilla, asignando a la casilla correspondiente del array board lo que hay justo encima, con shapeAt.
-     Hay que recordar, que en esta implementacion de Tetris no existe gravedad entre filas. Es decir, la fila superior no cae rellenando los huecos que pueda haber en filas inferiores, sino que el efecto es como si se moviera la fila completa tal cual esta, manteniendo sus piezas y tambien sus huecos exactamente como estaban.
-     Despues de realizar este proceso de borrado de lineas, si hemos borrado alguna:
-     - se actualiza la puntuacion
-     - se marca el booleano de finalizacion de la caida de pieza a true
-     - se asigna la pieza actual a NoShape
-     - se repinta todo
-     */
     private void quitar_lineas(){
         int lineas_completas = 0;
 
@@ -251,8 +227,8 @@ public class Board extends JPanel implements ActionListener {
 
 
         if (lineas_completas > 0) {
-            lineas_completas += lineas_completas;
-            barra.setText(String.valueOf(lineas_completas));
+            lineas_removidas += lineas_completas;
+            barra.setText(String.valueOf(lineas_removidas));
             pieza_caer = true;
             pieza.setFigura(Figura.Tetromino.NoFigura);
             repaint();
@@ -282,7 +258,6 @@ public class Board extends JPanel implements ActionListener {
                          x + squareWidth() - 1, y + 1);
     }
 
-    /* Implementacion de los controles por teclado.*/
     class TAdapter extends KeyAdapter {
          public void keyPressed(KeyEvent e) {
 

@@ -16,19 +16,15 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 public class Registrarse extends JFrame implements ActionListener {
-	
 
     private String userName, password;
     private JButton registrarse;
     private JPanel contentPane;
     private JTextField nombre;
     private JPasswordField contraseña;
-    private Escritura escritor;
     private Tetris tetris = new Tetris();
 
     public Registrarse() {
-
-        escritor = new Escritura("userData");
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -41,11 +37,11 @@ public class Registrarse extends JFrame implements ActionListener {
 		this.setTitle("Registro");
 		
 		JLabel name = new JLabel("Nombre");
-		name.setBounds(34, 70, 46, 14);
+		name.setBounds(10, 70, 100, 14);
 		contentPane.add(name);
 		
 		JLabel pass = new JLabel("Contraseña");
-		pass.setBounds(34, 113, 46, 14);
+		pass.setBounds(10, 113, 100, 14);
 		contentPane.add(pass);
 		
 		nombre = new JTextField();
@@ -71,14 +67,15 @@ public class Registrarse extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == registrarse) {
-            this.userName = nombre.getText();
-            this.password = contraseña.getText();
-
-            escritor.addContent(userName);
-            escritor.addContent(password);
-            JOptionPane.showMessageDialog(null, "Se registro exitosamente");
-            this.tetris.setVisible(true);
-            this.hide();
+        	Player player = new Player(nombre.getText(), contraseña.getText());
+        	Persistencia guardar = new Persistencia(player, true);
+        	if (guardar.isRepeat()) {
+        		JOptionPane.showMessageDialog(null, "Esté usuario ya existe!");
+			}else {
+				JOptionPane.showMessageDialog(null, "Se registro exitosamente :)");
+	            this.tetris.setVisible(true);
+	            this.hide();
+			}
         }
     }
     

@@ -27,9 +27,9 @@ public class IniciarSesion extends JFrame implements ActionListener {
 
     public IniciarSesion() {
 
-        lector = new Lectura("userData");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -68,6 +68,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
     	if(e.getSource() == iniciarsesion) {
+    		lector = new Lectura("userData");
     		ArrayList<String> contenido = lector.readAll();
     		
     	}

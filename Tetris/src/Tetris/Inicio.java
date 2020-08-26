@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Graphics;
+
 import javax.swing.ImageIcon;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -67,6 +69,7 @@ public class Inicio extends JFrame {
 		this.setVisible(true);
 		setTitle("TETRIS");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		this.setBounds(100,100,550,558);
     
 		Reglas.addActionListener(new ActionListener() {
@@ -78,12 +81,14 @@ public class Inicio extends JFrame {
 		Registrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				R = new Registrarse();
+				hide();
 			}
 		});
 
 		IniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				I = new IniciarSesion();
+				hide();
 			}
 		});
 

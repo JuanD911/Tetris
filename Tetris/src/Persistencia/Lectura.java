@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 public class Lectura {
 
     private String ruta;
@@ -37,9 +39,9 @@ public class Lectura {
             lectorRapido.close();
 
         } catch (FileNotFoundException a) {
-            System.out.println(a.getMessage());
+        	JOptionPane.showMessageDialog(null, a.getMessage());
         } catch(IOException e){
-            System.out.println(e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         return cadenas;

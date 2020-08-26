@@ -55,7 +55,7 @@ public class Figura {
 
 
 /* Metodo que genera una figura aleatoriamente */
-    public void setRandomShape(){
+    public void setFigura_random(){
         Random r = new Random();
         int x = Math.abs(r.nextInt()) % 7 + 1;
         Tetromino[] values = Tetromino.values();

@@ -13,19 +13,15 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
-    // El tablero contiene un conjunto de formas
     Figura.Tetromino[] tablero;
-    // Tamano del tablero
     final int ancho = 10;
     final int altura = 22;
 
-    // lineas_completas mantiene el contador de las lineas que hemos limpiado
     int lineas_completas = 0;
     JLabel barra;
 
-    // pieza actual
     Figura pieza;
-    // curX y curY determinan la posicion actual de la pieza que esta cayendo
+    
     int curX = 0;
     int curY = 0;
 
@@ -43,35 +39,27 @@ public class Board extends JPanel implements ActionListener {
        // para que desde ahora tenga el foco y el imput del teclado
        setFocusable(true);
 
-       // Generamos una nueva pieza
        pieza = new Figura();
-
-       // El timer lanza eventos cada cierto tiempo indicado por el delay.
-       // En nuestro caso el timer llama a actionPerformed() cada 400 ms
        timer = new Timer(550, this);
        timer.start();
 
-       // Asignamos la barra de estado
        barra =  parent.getBarra();
 
-       // Iniciamos el tablero con piezas vacias hasta el ancho y alto indicados
        tablero = new Figura.Tetromino[ancho * altura];
 
        addKeyListener(new TAdapter());
        limpiartablero();
     }
 
-    /* El metodo actionPerformed() comprueba si la caida de la pieza ha finalizado. En ese caso genera una nueva pieza con newPieze(). En caso contrario mueve una linea abajo con oneLineDown() */
     public void actionPerformed(ActionEvent e) {
         if (pieza_caer) {
             pieza_caer = false;
             nuevapieza();
         } else {
-            oneLineDown();
+            bajar_unalinea();
         }
     }
 
-    // Metodos auxiliares
     int squareWidth() { return (int) getSize().getWidth() / ancho; }
     int squareHeight() { return (int) getSize().getHeight() / altura; }
     Figura.Tetromino shapeAt(int x, int y) { return tablero[(y * ancho) + x]; }
@@ -157,7 +145,7 @@ public class Board extends JPanel implements ActionListener {
      Para implementar el metodo se utilizan dos metodos auxiliares:
      - tryMove para saber si se puede mover la pieza a ese nuevo lugar
      - y pieceDropped que una vez que la pieza tiene ya su posicion definitiva la guarda en el array del tablero */
-    private void oneLineDown(){
+    private void bajar_unalinea(){
         if (!tryMove(pieza, curX, curY - 1))
             caida_pieza();
     }
@@ -190,7 +178,7 @@ public class Board extends JPanel implements ActionListener {
      - cambiar el booleano de comienzo isStarted a falso
      - asignar a la barra de estado statusbar el texto "game over" */
     private void nuevapieza(){
-        pieza.setRandomShape();
+        pieza.setFigura_random();
         curX = ancho / 2 + 1;
         curY = altura - 1 + pieza.minY();
 
@@ -240,20 +228,20 @@ public class Board extends JPanel implements ActionListener {
      - se repinta todo
      */
     private void quitar_lineas(){
-        int numFullLines = 0;
+        int lineas_completas = 0;
 
         for (int i = altura - 1; i >= 0; --i) {
-            boolean lineIsFull = true;
+            boolean linea_Full = true;
 
             for (int j = 0; j < ancho; ++j) {
                 if (shapeAt(j, i) == Figura.Tetromino.NoFigura) {
-                	lineIsFull = false;
+                	linea_Full = false;
                     break;
                 }
             }
 
-            if (lineIsFull) {
-                ++numFullLines;
+            if (linea_Full) {
+                ++lineas_completas;
                 for (int k = i; k < altura - 1; ++k) {
                     for (int j = 0; j < ancho; ++j)
                          tablero[(k * ancho) + j] = shapeAt(j, k + 1);
@@ -262,8 +250,8 @@ public class Board extends JPanel implements ActionListener {
         }
 
 
-        if (numFullLines > 0) {
-            lineas_completas += numFullLines;
+        if (lineas_completas > 0) {
+            lineas_completas += lineas_completas;
             barra.setText(String.valueOf(lineas_completas));
             pieza_caer = true;
             pieza.setFigura(Figura.Tetromino.NoFigura);
@@ -271,9 +259,6 @@ public class Board extends JPanel implements ActionListener {
         }
      }
 
-     /* Este metodo dibuja cada uno de los 4 cuadrados que componen una pieza.
-      Asigna para cada tipo de pieza un color distinto.
-      Y anade a los bordes izquierdo y superior de cada cuadrado un poco de brillo, y al derecho e inferior un poco de sombra, para dar un efecto 3d. */
     private void drawSquare(Graphics g, int x, int y, Figura.Tetromino figura){
         Color colors[] = { new Color(103, 103, 103), new Color(204, 102, 102),
             new Color(102, 204, 102), new Color(102, 102, 204),
@@ -332,10 +317,10 @@ public class Board extends JPanel implements ActionListener {
                  bajar();
                  break;
              case 'd':
-                 oneLineDown();
+                 bajar_unalinea();
                  break;
              case 'D':
-                 oneLineDown();
+                 bajar_unalinea();
                  break;
              }
 

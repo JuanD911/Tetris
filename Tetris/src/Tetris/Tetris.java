@@ -20,6 +20,7 @@ public class Tetris extends JFrame {
         tablero.start(); // este metodo arranca el juego
         setSize(200, 400);
         setTitle("Tetris");
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
    }
 

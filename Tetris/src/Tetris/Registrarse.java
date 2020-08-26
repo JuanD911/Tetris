@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
 public class Registrarse extends JFrame implements ActionListener {
+	
 
     private String userName, password;
     private JButton registrarse;
@@ -28,9 +29,10 @@ public class Registrarse extends JFrame implements ActionListener {
     public Registrarse() {
 
         escritor = new Escritura("userData");
-
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -76,6 +78,7 @@ public class Registrarse extends JFrame implements ActionListener {
             escritor.addContent(password);
             JOptionPane.showMessageDialog(null, "Se registro exitosamente");
             this.tetris.setVisible(true);
+            this.hide();
         }
     }
     

@@ -19,7 +19,7 @@ public class Board extends JPanel implements ActionListener {
     private final int ancho = 10;
     private final int altura = 22;
     JButton restart = new JButton("Volver a jugar");
-
+   
     int lineas_removidas = 0;
     JLabel barra;
 
@@ -56,6 +56,7 @@ public class Board extends JPanel implements ActionListener {
        this.add(restart);
        restart.setVisible(false);
        restart.setBounds(165, 183, 144, 50);
+       
     }
 
     public void actionPerformed(ActionEvent e) {

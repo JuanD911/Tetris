@@ -22,6 +22,7 @@ public class Registrarse extends JFrame implements ActionListener {
     private JPanel contentPane;
     private JTextField nombre;
     private JPasswordField contraseña;
+    private JButton regresar;
     private Tetris tetris = new Tetris();
 
     public Registrarse() {
@@ -55,10 +56,15 @@ public class Registrarse extends JFrame implements ActionListener {
 		contraseña.setColumns(10);
 		
 		registrarse = new JButton("Registrarse");
-		registrarse.setBounds(165, 183, 144, 50);
+		registrarse.setBounds(250, 183, 144, 50);
 		contentPane.add(registrarse);
+		
+		regresar = new JButton("Regresar");
+		regresar.setBounds(90, 183, 144, 50);
+		contentPane.add(regresar);
 
         registrarse.addActionListener(this);
+        regresar.addActionListener(this);
 
         this.setVisible(true);
 
@@ -70,12 +76,15 @@ public class Registrarse extends JFrame implements ActionListener {
         	Player player = new Player(nombre.getText(), contraseña.getText());
         	Persistencia guardar = new Persistencia(player, true);
         	if (guardar.isRepeat()) {
-        		JOptionPane.showMessageDialog(null, "Esté usuario ya existe!");
+        		JOptionPane.showMessageDialog(null, "Este usuario ya existe!");
 			}else {
 				JOptionPane.showMessageDialog(null, "Se registro exitosamente :)");
 	            this.tetris.setVisible(true);
 	            this.hide();
 			}
+        }
+        if(e.getSource() == regresar) {
+        	this.hide();
         }
     }
     

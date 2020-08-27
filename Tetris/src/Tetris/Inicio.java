@@ -81,14 +81,12 @@ public class Inicio extends JFrame {
 		Registrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				R = new Registrarse();
-				hide();
 			}
 		});
 
 		IniciarSesion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				I = new IniciarSesion();
-				hide();
 			}
 		});
 

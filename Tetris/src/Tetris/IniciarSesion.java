@@ -25,6 +25,7 @@ public class IniciarSesion extends JFrame implements ActionListener {
     private JPasswordField contraseña;
     private Tetris tetris = new Tetris();
     private Persistencia datos;
+    private JButton regresar;
 
     public IniciarSesion() {
 
@@ -57,10 +58,15 @@ public class IniciarSesion extends JFrame implements ActionListener {
 		contraseña.setColumns(10);
 		
 		iniciarsesion = new JButton("Iniciar Sesion");
-		iniciarsesion.setBounds(165, 183, 144, 50);
+		iniciarsesion.setBounds(250, 183, 144, 50);
 		contentPane.add(iniciarsesion);
+		
+		regresar = new JButton("Regresar");
+		regresar.setBounds(90, 183, 144, 50);
+		contentPane.add(regresar);
 
         iniciarsesion.addActionListener(this);
+        regresar.addActionListener(this);
 
         this.setVisible(true);
 
@@ -71,11 +77,18 @@ public class IniciarSesion extends JFrame implements ActionListener {
     	if(e.getSource() == iniciarsesion) {
     		datos = new Persistencia (nombre.getText(), contraseña.getText());
     		if (!datos.isChecked()) {
-    			JOptionPane.showMessageDialog(null, "Te quedo mal gran hijueputa");
+    			JOptionPane.showMessageDialog(null, "Nombre o contraseña incorrectos");
     		} else {
     			JOptionPane.showMessageDialog(null, "Bienvenido "+nombre.getText());
+    			this.hide();
     			tetris.setVisible(true);
     		}
     	}
+    	if(e.getSource() == regresar) {
+    		this.hide();
+    }
+    
+   
+    	
     }
 }

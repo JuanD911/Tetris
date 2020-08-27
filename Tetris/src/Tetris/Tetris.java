@@ -21,7 +21,7 @@ public class Tetris extends JFrame {
         setSize(200, 400);
         setTitle("Tetris");
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(false);
    }
 

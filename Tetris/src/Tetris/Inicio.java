@@ -68,7 +68,7 @@ public class Inicio extends JFrame {
 		pack();
 		this.setVisible(true);
 		setTitle("TETRIS");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		this.setBounds(100,100,550,558);
     

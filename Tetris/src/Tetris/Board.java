@@ -141,14 +141,11 @@ public class Board extends JPanel implements ActionListener {
             caida_pieza();
     }
 
-
-    /* Este metodo limpia el array del tablero (board). Para ello, asigna a cada una de sus casillas una figura vacia (Tetrominoes NoShape). */
     private void limpiartablero(){
         for (int i = 0; i < altura * ancho; ++i)
             tablero[i] = Figura.Tetromino.NoFigura;
     }
-
-    /* Este metodo anade la pieza que esta cayendo al array del tablero (board). Se llamara cuando la pieza ya haya terminado de caer, asi que debemos comprobar si ha hecho una linea que hay que borrar o no, llamando para ello al metodo removeFullLines(). Por ultimo, intentamos crear una nueva pieza para seguir jugando. */
+   
     private void caida_pieza(){
         for (int i = 0; i < 4; ++i) {
             int x = curX + pieza.x(i);
@@ -183,10 +180,6 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 
-    /* Este metodo intenta mover una pieza a una posicion x y que pasamos como argumentos. El metodo devuelve false si no ha sido posible moverla a esa posicion. Esto puede pasar por dos motivos:
-     1. que queramos salir de los limites del tablero.
-     2. que haya tocado otra pieza
-     Si no ocurre ninguno de estos casos, la pieza se puede mover, por lo que actualizamos su posicion, repintamos y devolvemos verdadero. */
     private boolean tryMove(Figura newPiece, int newX, int newY){
         for (int i = 0; i < 4; ++i) {
             int x = newX + newPiece.x(i);

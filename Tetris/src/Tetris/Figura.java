@@ -74,11 +74,6 @@ public class Figura {
         return m;
     }
 
-/* Rota la pieza a la izquierda o derecha y devuelve la nueva forma.
-        - Primero comprueba que la forma no sea el cuadrado, ya que si lo es, como no hay que rotarlo lo devuelve directamente.
-        - En caso contrario crea una nueva forma (Shape) donde va guardando la forma rotada.
-        - Para ello, recorre los 4 elementos de la forma, del tipo {int, int} y va asignandole los nuevos valores.
-        - Utiliza los metodos get y(int index) x(int index) y los metodos set setX(int index, int x) y setY(int index, int y) */
     public Figura rotarizquierda(){
         if (pieza == Tetromino.FiguraCuadrado)
                 return this;
